@@ -3,15 +3,10 @@ import logging
 import os
 from datetime import datetime, timedelta
 
-import colorama
 from cryptography import x509
 from cryptography.hazmat.backends import default_backend
 from humanize import naturaldelta
 from kubernetes import client, config
-
-config.load_kube_config()
-
-colorama.init(autoreset=True)
 
 
 def certificate_from_secret(secret: client.V1Secret) -> x509.Certificate:
@@ -21,7 +16,6 @@ def certificate_from_secret(secret: client.V1Secret) -> x509.Certificate:
 
 
 def list_certificates() -> [client.V1Secret]:
-    result = []
     v1 = client.CoreV1Api()
     secrets = v1.list_secret_for_all_namespaces()
 
@@ -52,6 +46,7 @@ def report_expiration(secrets: [client.V1Secret]):
 
 
 if __name__ == "__main__":
+    config.load_kube_config()
     logging.basicConfig(
         level=os.getenv("LOG_LEVEL", "INFO"), format="%(levelname)s: %(message)s"
     )
