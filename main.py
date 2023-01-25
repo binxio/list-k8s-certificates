@@ -1,12 +1,13 @@
-from kubernetes import client, config
-from datetime import datetime, timedelta
-from cryptography import x509
-from cryptography.hazmat.backends import default_backend
 import base64
-import colorama
-from humanize import naturaldelta
 import logging
 import os
+from datetime import datetime, timedelta
+
+import colorama
+from cryptography import x509
+from cryptography.hazmat.backends import default_backend
+from humanize import naturaldelta
+from kubernetes import client, config
 
 config.load_kube_config()
 
